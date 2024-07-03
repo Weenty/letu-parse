@@ -7,9 +7,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.command import Command
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service as ChromeService
-from bs4 import BeautifulSoup
-
 class Browser:
     @classmethod
     async def create(cls, url):
@@ -58,7 +55,6 @@ class BrowserPool:
         loop = asyncio.get_event_loop()
         future = await loop.run_in_executor(self.executor, Browser.create, url)
         browser = await future
-        # browser = await Browser.create(url)
         self.browsers.append(browser)
         return browser
 
