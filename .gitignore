@@ -1,3 +1,5 @@
 __pycache__
 venv
-*.xlsx
+output.xlsx
+proxy-list.txt
+*.csv
