@@ -3,3 +3,5 @@ venv
 output.xlsx
 proxy-list.txt
 *.csv
+.obsidian
+output1.xlsx
