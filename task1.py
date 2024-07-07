@@ -18,21 +18,22 @@ else:
 def save_results():
     global result_array, file
 
+    print(f'Количество полученных записей: {len(result_array)}')
     file_indexes = file.copy().reset_index()
     dict_urls = dict()
     for index, row in file_indexes.iterrows():
         dict_urls[row['Конкурент ссылка']] = index
-    print(result_array)
+    
     for strict in result_array:
         index = dict_urls[strict['url']]
         file.at[index, 'Цена до скидки'] = strict['full_price']
         file.at[index, 'Цена со скидкой или по карте лояльности'] = strict['price']
         file.at[index, 'Доступен для заказа (есть остаток)'] = strict['unvalible']
         file.at[index, 'Дата'] = strict['date']
-
+    
+    file = file.loc[:, ~file.columns.str.contains('^Unnamed')]
     with pandas.ExcelWriter('output1.xlsx') as writer:
         file.to_excel(writer, sheet_name='result')
-
     print("Results saved to output1.xlsx")
     exit()
 
