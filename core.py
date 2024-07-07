@@ -127,8 +127,8 @@ class BrowserPool:
             with open('proxy-list.txt', 'w') as file:
                 file.write('\n'.join(response_http_proxy + response_socks4_proxy + response_socks5_proxy))
         
-        with open('proxy-list.txt', 'r') as file:
-            self.proxy_list = (file.read()).split('\n')
+        # with open('proxy-list.txt', 'r') as file:
+        #     self.proxy_list = (file.read()).split('\n')
         
         await asyncio.gather(*[self.create_browser('https://google.com') for _ in range(self.max_browsers)])
     

@@ -33,10 +33,11 @@ async def parse(pool: BrowserPool, url: str, result_array: list):
             element = await execute(pool.executor, loop, method, strict[key])
             
             if key == 'unvalible':
-                strict[key] = bool(element)
-                continue
-            
-            if element:
+                if element:
+                    strict[key] = True
+                else:
+                    strict[key] = False
+            elif element:
                 strict[key] = element.get_property('textContent').strip()
                 if key == 'name' and ',' in strict[key]:
                     strict[key] = strict[key].split(',')[0]
@@ -46,8 +47,8 @@ async def parse(pool: BrowserPool, url: str, result_array: list):
             else:
                 strict[key] = None
         
-        if not strict['price'] and not strict['full_price']:
-            raise Exception('Не удалось спарсить')
+        # if not strict['price'] and not strict['full_price']:
+        #     raise Exception('Не удалось спарсить')
         
         strict['date'] = datetime.now()
         strict['url'] = url
