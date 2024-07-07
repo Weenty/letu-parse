@@ -54,9 +54,11 @@ async def parse(pool: BrowserPool, url: str, result_array: list):
         result_array.append(strict)
         print(f'PARSED {url}')
     except Exception as e:
+        print(e)
+        print(f"Error by url {url}")
+        
         await pool.restart_browser_with_proxy(browser)
         browser_deleted = True
-        print(f"Error by url {url}: {e}")
         return url
     finally:
         if not browser_deleted:
